@@ -22,4 +22,8 @@ describe("App Componeent Tests", () => {
 
     expect(app.find(".App-footer")).toBeDefined();
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> f89dba644e635dd27d12694ba1ec751651041e98

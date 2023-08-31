@@ -34,9 +34,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ],
+<<<<<<< HEAD
     "homepage": [
       "http://172.17.0.24:3000/",
       "http://localhost:3000/"
     ]
+=======
+>>>>>>> f89dba644e635dd27d12694ba1ec751651041e98
   }
 }

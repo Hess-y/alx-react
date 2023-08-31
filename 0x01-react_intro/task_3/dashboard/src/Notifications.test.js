@@ -26,4 +26,8 @@ describe("Notification component tests", () => {
 
     expect(notification.find("p").text()).toBe("Here is the list of notifications");
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> f89dba644e635dd27d12694ba1ec751651041e98
