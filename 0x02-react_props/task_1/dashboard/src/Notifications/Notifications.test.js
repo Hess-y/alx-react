@@ -5,25 +5,33 @@ import Notifications from "./Notifications";
 describe("Notification component tests", () => {
   it("renders Notification component without crashing", () => {
     const notification = shallow(<Notifications />);
-
     expect(notification).toBeDefined();
   });
 
   it("renders ul", () => {
     const notification = shallow(<Notifications />);
-
     expect(notification.find("ul")).toBeDefined();
   });
 
-  it("renders three list items", () => {
+  it("renders NotificationItem elements", () => {
     const notification = shallow(<Notifications />);
-
-    expect(notification.find("li")).toHaveLength(3);
+    expect(notification.find("NotificationItem")).toHaveLength(3); // Assuming your NotificationItem component has a unique name
   });
 
   it("renders correct text", () => {
     const notification = shallow(<Notifications />);
-
     expect(notification.find("p").text()).toBe("Here is the list of notifications");
   });
+
+  it("renders correct HTML for the first NotificationItem", () => {
+  const notification = shallow(<Notifications />);
+  const notificationItem = notification.find("NotificationItem").first();
+  
+  // Assuming your NotificationItem component has a prop for HTML content
+  const htmlProp = notificationItem.prop("html");
+  expect(htmlProp).toEqual({ __html: "HTML content here" }); // Replace with your expected HTML
 });
+});
+
+
+                    
