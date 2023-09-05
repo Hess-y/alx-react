@@ -3,6 +3,8 @@ import "./Notifications.css";
 import closeIcon from "../assets/close-icon.png";
 import { getLatestNotification } from "../utils/utils";
 import NotificationItem from "./NotificationItem";
+import PropTypes from "prop-types";
+
 
 function Notifications() {
   return (
@@ -21,7 +23,21 @@ function Notifications() {
         <NotificationItem type="urgent" html={{ __html: getLatestNotification() }} />
       </ul>
     </div>
+  ) : (
+        <div className="menuItem">
+          <p>Your notifications</p>
+        </div>
+      )}
+    </React.Fragment>
   );
 }
+
+Notifications.propTypes = {
+  displayDrawer: PropTypes.bool,
+};
+
+Notifications.defaultProps = {
+  displayDrawer: false,
+};
 
 export default Notifications;
