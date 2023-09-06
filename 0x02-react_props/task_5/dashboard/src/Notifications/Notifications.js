@@ -4,9 +4,10 @@ import closeIcon from "../assets/close-icon.png";
 import { getLatestNotification } from "../utils/utils";
 import NotificationItem from "./NotificationItem";
 import PropTypes from "prop-types";
+import CourseList from "../CourseList/CourseList";
 
 
-function Notifications() {
+function Notifications() { listNotifications, displayDrawer }) {
   return (
     <div className="Notifications">
       <button
@@ -33,10 +34,12 @@ function Notifications() {
 }
 
 Notifications.propTypes = {
+  listNotifications: PropTypes.arrayOf(NotificationItemShape),
   displayDrawer: PropTypes.bool,
 };
 
 Notifications.defaultProps = {
+  listNotifications: [],
   displayDrawer: false,
 };
 
