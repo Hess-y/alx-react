@@ -31,7 +31,34 @@ describe("Notification component tests", () => {
   const htmlProp = notificationItem.prop("html");
   expect(htmlProp).toEqual({ __html: "HTML content here" }); // Replace with your expected HTML
 });
+
+  it("renders correctly with an empty listNotifications prop", () => {
+    const notification = shallow(<Notifications listNotifications={[]} />);
+    expect(notification.find("li").text()).toBe("No new notification for now");
+  });
+
+  it("renders listNotifications correctly", () => {
+    const listNotifications = [
+      {
+        id: 1,
+        type: "default",
+        value: "New course available",
+      },
+      {
+        id: 2,
+        type: "urgent",
+        value: "New resume available",
+      },
+    ];
+
+    const notification = shallow(<Notifications listNotifications={listNotifications} />);
+    expect(notification.find(NotificationItem)).toHaveLength(listNotifications.length);
+  });
+
+  it("does not display default message when listNotifications is empty", () => {
+    const notification = shallow(<Notifications listNotifications={[]} />);
+    expect(notification.find("p").text()).not.toBe("Here is the list of notifications");
+    expect(notification.find("li").text()).toBe("No new notification for now");
+  });
 });
-
-
-                    
+      
