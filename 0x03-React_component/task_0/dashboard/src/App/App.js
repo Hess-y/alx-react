@@ -43,4 +43,24 @@ App.propTypes = {
   isLoggedIn: PropTypes.bool,
 };
 
+class App extends Component {
+  constructor(props) {
+     super(props);
+
+this.state = {
+      // Initialize your state here if needed
+    };
+  }
+
+render() {
+    // Move the functionality from the App function here
+    return (
+      <div>
+        {/* JSX content goes here */}
+      </div>
+    );
+  }
+}
+
+    this.state = {
 export default App;
