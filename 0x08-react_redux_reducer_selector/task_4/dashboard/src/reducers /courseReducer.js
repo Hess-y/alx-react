@@ -3,36 +3,36 @@ import {
 	SELECT_COURSE,
 	UNSELECT_COURSE,
 } from '../actions/courseActionTypes';
+import { Map } from 'immutable';
+import { coursesNormalizer } from '../schema/courses';
 
-const defaultState = [];
+const initialState = Map([]);
 
-export function courseReducer(state = defaultState, action) {
+export default function courseReducer(state = initialState, action) {
+	state = Map(state);
 	switch (action.type) {
-		case FETCH_COURSE_SUCCESS:
-			return action.data.map((course) => ({
-				...course,
+		case FETCH_COURSE_SUCCESS: {
+			const data = action.data.map((item) => ({
+				id: item.id,
+				name: item.name,
 				isSelected: false,
+				credit: item.credit,
 			}));
-		case SELECT_COURSE:
-			return state.map((course) => {
-				if (course.id === action.index) {
-					return {
-						...course,
-						isSelected: true,
-					};
-				}
-				return { ...course };
-			});
-		case UNSELECT_COURSE:
-			return state.map((course) => {
-				if (course.id === action.index) {
-					return {
-						...course,
-						isSelected: false,
-					};
-				}
-				return { ...course };
-			});
+			const normalizedData = coursesNormalizer(data);
+			return state.merge(normalizedData);
+		}
+		case SELECT_COURSE: {
+			return state.setIn(
+				['entities', 'courses', action.index.toString(), 'isSelected'],
+				true
+			);
+		}
+		case UNSELECT_COURSE: {
+			return state.setIn(
+				['entities', 'courses', action.index.toString(), 'isSelected'],
+				false
+			);
+		}
 		default:
 			return state;
 	}
