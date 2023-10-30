@@ -1,52 +1,31 @@
-/**
- * @jest-environment jsdom
- */
-import React from 'react';
-import Footer from './Footer';
-import { getFullYear, getFooterCopy } from '../utils/utils';
 import { shallow, mount } from 'enzyme';
-import { AppContext } from '../App/AppContext';
+import React from 'react';
+import { Footer } from './Footer';
+import AppContext from '../App/AppContext';
+import { user, logOut } from '../App/AppContext';
+import { shallowEqual } from 'react-redux';
 
-describe('rendering components', () => {
-	it('renders Footer component without crashing', () => {
+describe('<Footer />', () => {
+	it('Footer renders without crashing', () => {
 		const wrapper = shallow(<Footer />);
-
-		expect(wrapper.exists()).toBe(true);
+		expect(wrapper.exists()).toEqual(true);
+	});
+	it('Verifies that the components at the very least render the text “Copyright”', () => {
+		const wrapper = shallow(<Footer />);
+		expect(wrapper.find('div.footer p')).toHaveLength(1);
+		expect(wrapper.find('div.footer p').text()).toContain('Copyright');
 	});
 
-	it('Footer component renders "Copyright ${getFullYear()} - ${getFooterCopy(true)}"', () => {
-		const wrapper = mount(<Footer />);
-
-		expect(wrapper.find('.footer').text()).toEqual(
-			`Copyright ${getFullYear()} - ${getFooterCopy(true)}`
-		);
+	it('verifies that the link is not displayed when the user is logged out within the context', () => {
+		const wrapper = shallow(<Footer user={null} />);
+		expect(wrapper.find('div.footer a')).toHaveLength(0);
 	});
 
-	it('only renders link when user is logged in', () => {
-		const testData = {
-			user: { email: 'fred@gmail.com', password: 'pass123', isLoggedIn: true },
-			logOut: () => {},
-		};
-		const wrapper = mount(
-			<AppContext.Provider value={testData}>
-				<Footer />
-			</AppContext.Provider>
+	it('verifies that the link is displayed when the user is logged in within the context', () => {
+		const wrapper = shallow(
+			<Footer user={{ email: 'larry@hd.com', password: '123456' }} />
 		);
-
-		expect(wrapper.find('.footer a').exists()).toBe(true);
-	});
-
-	it('does not render link when user is logged out', () => {
-		const testData = {
-			user: { email: 'fred@gmail.com', password: 'pass123', isLoggedIn: false },
-			logOut: () => {},
-		};
-		const wrapper = mount(
-			<AppContext.Provider value={testData}>
-				<Footer />
-			</AppContext.Provider>
-		);
-
-		expect(wrapper.find('.footer a').exists()).toBe(false);
+		expect(wrapper.find('div.footer a')).toHaveLength(1);
+		expect(wrapper.find('div.footer a').text()).toEqual('Contact us');
 	});
 });
