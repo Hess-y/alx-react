@@ -1,10 +1,14 @@
 import React, { PureComponent, Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchNotifications } from '../actions/notificationActionCreators';
+import {
+	fetchNotifications,
+	markAsRead,
+} from '../actions/notificationActionCreators';
 import NotificationItem from './NotificationItem';
 import PropTypes from 'prop-types';
 import closeIcon from '../assets/close-icon.png';
 import { StyleSheet, css } from 'aphrodite';
+import { getUnreadNotifications } from '../selectors/notificationSelector';
 
 export class Notifications extends Component {
 	constructor(props) {
@@ -215,12 +219,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
 	return {
-		listNotifications: state.notifications.get('messages'),
+		listNotifications: getUnreadNotifications(state),
 	};
 };
 
 const mapDispatchToProps = {
 	fetchNotifications,
+	markNotificationAsRead: markAsRead,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
